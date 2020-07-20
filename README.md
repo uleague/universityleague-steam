@@ -1,4 +1,4 @@
-This is **Max Korzh**. He uses steampy and lives on a flask webserver.
+This is **Max Korzh**. He uses steampy and lives on a starlette webserver.
 
 He invites a person to the team by adding to friends and sending a message with the link.
 
