@@ -3,3 +3,4 @@ __pycache__/
 .env
 .env.debug
 vscode/
+node_modules/
