@@ -9,5 +9,3 @@ STEAM_PASSWORD = os.getenv("STEAM_PASSWORD", False)
 
 STEAM_API = os.getenv("STEAM_API", False)
 STEAM_SHARED_SECRET = os.getenv("STEAM_SHARED_SECRET", False)
-
-
