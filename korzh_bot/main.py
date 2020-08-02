@@ -6,18 +6,18 @@ from steam.ext.commands import Bot
 from api import routes
 
 from asyncio import gather, get_event_loop
-from logger import get_logger
+from logger import setup_logging
+import logging
+
+LOG = logging.getLogger("Main")
 
 from aiohttp.web import AppRunner, Application, TCPSite
 from sys import argv
-
-LOG = get_logger("Main")
 
 from settings import STEAM_LOGIN, STEAM_PASSWORD, STEAM_API, STEAM_SHARED_SECRET
 
 
 async def run_bot():
-
     app = Application()
     app.add_routes(routes)
 
@@ -28,6 +28,15 @@ async def run_bot():
 
     bot = Bot(command_prefix="!")
 
+    @bot.event
+    async def on_ready():
+        LOG.info("------------")
+        LOG.info("Logged in as")
+        LOG.info("Username: {}".format(bot.user))
+        LOG.info("ID: {}".format(bot.user.id64))
+        LOG.info("Friends: {}".format(len(bot.user.friends)))
+        LOG.info("------------")
+
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py") and filename != "__init__.py":
             bot.load_extension("cogs.{name}".format(name=filename[:-3]))
@@ -35,16 +44,10 @@ async def run_bot():
     app["bot"] = bot
 
     try:
-        LOG.info("Starting the bot...")
         await bot.start(
             STEAM_LOGIN, STEAM_PASSWORD, STEAM_API, shared_secret=STEAM_SHARED_SECRET
         )
-        LOG.info("-" * 30)
-        LOG.info("Logged in as: {}".format(bot.user.name))
-        LOG.info("URL: {}".format(bot.user.community_url))
-        LOG.info("-" * 30)
     except:
-        LOG.exception()
         await bot.close(),
         raise
     finally:
@@ -52,5 +55,6 @@ async def run_bot():
 
 
 if __name__ == "__main__":
+    setup_logging()
     loop = get_event_loop()
     loop.run_until_complete(run_bot())

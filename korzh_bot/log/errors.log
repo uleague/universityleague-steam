@@ -1,0 +1,9 @@
+2020-08-02 20:08:04,779 - api - ERROR - Error occured
+Traceback (most recent call last):
+  File "/Users/evgeniipetrovich/Desktop/Projects/esports/universityleague-steam/korzh_bot/api.py", line 51, in add_friend
+    await new_friend.add()
+  File "/Users/evgeniipetrovich/Desktop/Projects/esports/universityleague-steam/venv/lib/python3.8/site-packages/steam/user.py", line 95, in add
+    await self._state.http.add_user(self.id64)
+  File "/Users/evgeniipetrovich/Desktop/Projects/esports/universityleague-steam/venv/lib/python3.8/site-packages/steam/http.py", line 153, in request
+    raise errors.HTTPException(r, data)
+steam.errors.HTTPException: 400 Bad Request (error code: 76561198032200795): []

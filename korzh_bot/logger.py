@@ -1,29 +1,21 @@
-import logging
-import sys
-from logging.handlers import RotatingFileHandler
-
-FORMATTER = logging.Formatter("%(asctime)s — %(name)s — %(levelname)s — %(message)s")
-LOG_FILE = "log/korzh_bot.log"
+import os
+import json
+import logging.config
 
 
-def get_console_handler():
-    console_handler = logging.StreamHandler(sys.stdout)
-    console_handler.setFormatter(FORMATTER)
-    console_handler.setLevel(logging.DEBUG)
-    return console_handler
-
-
-def get_file_handler():
-    file_handler = RotatingFileHandler(LOG_FILE, maxBytes=1000000, backupCount=10)
-    file_handler.setFormatter(FORMATTER)
-    return file_handler
-
-
-def get_logger(logger_name):
-    logger = logging.getLogger(logger_name)
-    logger.setLevel(logging.DEBUG)  # better to have too much log than not enough
-    logger.addHandler(get_console_handler())
-    logger.addHandler(get_file_handler())
-    # with this pattern, it's rarely necessary to propagate the error up to parent
-    logger.propagate = False
-    return logger
+def setup_logging(
+    default_path="logging.json", default_level=logging.DEBUG, env_key="LOG_CFG"
+):
+    """
+    Setup logging configuration
+    """
+    path = default_path
+    value = os.getenv(env_key, None)
+    if value:
+        path = value
+    if os.path.exists(path):
+        with open(path, "rt") as f:
+            config = json.load(f)
+        logging.config.dictConfig(config)
+    else:
+        logging.basicConfig(level=default_level)

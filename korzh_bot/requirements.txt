@@ -34,7 +34,6 @@ regex==2020.7.14
 rsa==3.4.2
 six==1.15.0
 soupsieve==2.0.1
-starlette==0.13.6
 steamio==0.3.2
 stringcase==1.2.0
 toml==0.10.1

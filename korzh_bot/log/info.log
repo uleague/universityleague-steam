@@ -1,0 +1,60 @@
+2020-08-02 20:01:52,929 - steam.client - INFO - Trades will not be automatically accepted when sent as no identity_secret was passed.
+2020-08-02 20:01:52,930 - steam.client - INFO - Logging in to steamcommunity.com
+2020-08-02 20:01:59,066 - steam.gateway - INFO - Creating a websocket connection to: cm6-ams1.cm.steampowered.com:27033
+2020-08-02 20:02:03,096 - Main - INFO - ------------
+2020-08-02 20:02:03,097 - Main - INFO - Logged in as
+2020-08-02 20:02:03,097 - Main - INFO - Username: University League
+2020-08-02 20:02:03,097 - Main - INFO - ID: 76561199021252568
+2020-08-02 20:02:03,097 - Main - INFO - Friends: 66
+2020-08-02 20:02:03,097 - Main - INFO - ------------
+2020-08-02 20:08:04,363 - api - INFO - Adding a friend parapheen. Steam id: 76561198032200795
+2020-08-02 20:08:04,779 - api - ERROR - Error occured
+Traceback (most recent call last):
+  File "/Users/evgeniipetrovich/Desktop/Projects/esports/universityleague-steam/korzh_bot/api.py", line 51, in add_friend
+    await new_friend.add()
+  File "/Users/evgeniipetrovich/Desktop/Projects/esports/universityleague-steam/venv/lib/python3.8/site-packages/steam/user.py", line 95, in add
+    await self._state.http.add_user(self.id64)
+  File "/Users/evgeniipetrovich/Desktop/Projects/esports/universityleague-steam/venv/lib/python3.8/site-packages/steam/http.py", line 153, in request
+    raise errors.HTTPException(r, data)
+steam.errors.HTTPException: 400 Bad Request (error code: 76561198032200795): []
+2020-08-02 20:08:04,794 - aiohttp.access - INFO - 127.0.0.1 [02/Aug/2020:17:08:04 +0000] "POST /friends HTTP/1.1" 500 248 "-" "PostmanRuntime/7.26.2"
+2020-08-02 20:08:54,728 - steam.gateway - WARNING - Heartbeat blocked for more than 10 seconds.
+Loop thread traceback (most recent call last):
+  File "/Users/evgeniipetrovich/anaconda3/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+
+2020-08-02 20:09:04,732 - steam.gateway - WARNING - Heartbeat blocked for more than 20 seconds.
+Loop thread traceback (most recent call last):
+  File "/Users/evgeniipetrovich/anaconda3/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+
+2020-08-02 20:09:14,738 - steam.gateway - WARNING - Heartbeat blocked for more than 30 seconds.
+Loop thread traceback (most recent call last):
+  File "/Users/evgeniipetrovich/anaconda3/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+
+2020-08-02 20:09:24,743 - steam.gateway - WARNING - Heartbeat blocked for more than 40 seconds.
+Loop thread traceback (most recent call last):
+  File "/Users/evgeniipetrovich/anaconda3/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+
+2020-08-02 20:09:34,746 - steam.gateway - WARNING - Heartbeat blocked for more than 50 seconds.
+Loop thread traceback (most recent call last):
+  File "/Users/evgeniipetrovich/anaconda3/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+
+2020-08-02 20:09:44,748 - steam.gateway - WARNING - Heartbeat blocked for more than 60 seconds.
+Loop thread traceback (most recent call last):
+  File "/Users/evgeniipetrovich/anaconda3/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+
+2020-08-02 20:09:54,751 - steam.gateway - WARNING - Heartbeat blocked for more than 70 seconds.
+Loop thread traceback (most recent call last):
+  File "/Users/evgeniipetrovich/anaconda3/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+
+2020-08-02 20:10:04,763 - steam.gateway - WARNING - Heartbeat blocked for more than 80 seconds.
+Loop thread traceback (most recent call last):
+  File "/Users/evgeniipetrovich/anaconda3/lib/python3.8/threading.py", line 1388, in _shutdown
+    lock.acquire()
+
