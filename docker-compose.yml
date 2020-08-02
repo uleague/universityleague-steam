@@ -4,7 +4,7 @@ services:
         container_name: "korzh_bot"
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.dev
         env_file: korzh_bot/.env
         ports: 
             - 8080:8080

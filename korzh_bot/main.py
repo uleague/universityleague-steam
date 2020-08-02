@@ -14,7 +14,7 @@ LOG = logging.getLogger("Main")
 from aiohttp.web import AppRunner, Application, TCPSite
 from sys import argv
 
-from settings import STEAM_LOGIN, STEAM_PASSWORD, STEAM_API, STEAM_SHARED_SECRET
+from settings import STEAM_LOGIN, STEAM_PASSWORD, STEAM_API, STEAM_SHARED_SECRET, PORT
 
 
 async def run_bot():
@@ -23,7 +23,7 @@ async def run_bot():
 
     runner = AppRunner(app)
     await runner.setup()
-    site = TCPSite(runner, "0.0.0.0", 8080)
+    site = TCPSite(runner, "0.0.0.0", PORT)
     await site.start()
 
     bot = Bot(command_prefix="!")
