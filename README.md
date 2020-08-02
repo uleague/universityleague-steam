@@ -5,4 +5,5 @@ He invites a person to the team by adding to friends and sending a message with 
 **DEV**
 1) create virtual env 
 2) run pip install requirements.txt
-3) nodemon main.py
+3) configure .env
+4) docker-compose up --build
