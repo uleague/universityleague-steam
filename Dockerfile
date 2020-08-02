@@ -9,7 +9,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./korzh_bot/ .
 
 ENV PORT=80
-
 EXPOSE 80
+
+RUN mkdir -p log
 
 CMD ["python", "main.py"]
