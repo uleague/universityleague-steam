@@ -6,15 +6,14 @@ from steam.ext.commands import Bot
 from api import routes
 
 from asyncio import gather, get_event_loop
-from logging import basicConfig, INFO
+from logger import get_logger
 
 from aiohttp.web import AppRunner, Application, TCPSite
 from sys import argv
 
+LOG = get_logger("Main")
 
-basicConfig(level=INFO)
-
-from settings import *
+from settings import STEAM_LOGIN, STEAM_PASSWORD, STEAM_API, STEAM_SHARED_SECRET
 
 
 async def run_bot():
@@ -36,14 +35,18 @@ async def run_bot():
     app["bot"] = bot
 
     try:
+        LOG.info("Starting the bot...")
         await bot.start(
             STEAM_LOGIN, STEAM_PASSWORD, STEAM_API, shared_secret=STEAM_SHARED_SECRET
         )
-
+        LOG.info("-" * 30)
+        LOG.info("Logged in as: {}".format(bot.user.name))
+        LOG.info("URL: {}".format(bot.user.community_url))
+        LOG.info("-" * 30)
     except:
-        bot.close(),
+        LOG.exception()
+        await bot.close(),
         raise
-
     finally:
         await runner.cleanup()
 

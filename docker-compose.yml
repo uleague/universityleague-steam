@@ -1,0 +1,11 @@
+version: "3.8"
+services: 
+    korzh_bot:
+        container_name: "korzh_bot"
+        build:
+            context: .
+            dockerfile: Dockerfile
+        env_file: korzh_bot/.env
+        ports: 
+            - 8080:8080
+        entrypoint: ['python', 'main.py']
