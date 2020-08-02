@@ -16,7 +16,7 @@ env:
   STEAM_PASSWORD: ${{ secrets.STEAM_PASSWORD }}
   STEAM_API: ${{ secrets.STEAM_API }}
   STEAM_SHARED_SECRET: ${{ secrets.STEAM_SHARED_SECRET }}
-  PORT: 80
+  PORT: "80"
   TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
   TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
   RELEASE_NAME: ul-steam-bot
