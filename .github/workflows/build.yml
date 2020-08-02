@@ -76,7 +76,7 @@ jobs:
             --set env[2].name=STEAM_API
             --set env[2].value=${{ env.STEAM_API }}
             --set env[3].name=STEAM_SHARED_SECRET
-            --set env[3].value=${{ env.STEAM_SHARED_SECRET }
+            --set env[3].value=${{ env.STEAM_SHARED_SECRET }}
             --set env[4].name=PORT
             --set env[4].value=${{ env.PORT }}
           "
