@@ -2,7 +2,7 @@ import os
 import sys
 from asyncio import get_event_loop
 
-from steam.ext.commands import Bot
+from bot import steam_bot
 from api import routes
 
 from asyncio import gather, get_event_loop
@@ -26,16 +26,7 @@ async def run_bot():
     site = TCPSite(runner, "0.0.0.0", PORT)
     await site.start()
 
-    bot = Bot(command_prefix="!")
-
-    @bot.event
-    async def on_ready():
-        LOG.info("------------")
-        LOG.info("Logged in as")
-        LOG.info("Username: {}".format(bot.user))
-        LOG.info("ID: {}".format(bot.user.id64))
-        LOG.info("Friends: {}".format(len(bot.user.friends)))
-        LOG.info("------------")
+    bot = steam_bot
 
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py") and filename != "__init__.py":

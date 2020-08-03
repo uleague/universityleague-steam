@@ -45,7 +45,6 @@ async def add_friend(request):
     client = request.app["bot"]
     try:
         body = await request.json()
-        LOG.info(body)
         steam_id = body["steam_id"]
         new_friend = await client.fetch_user(steam_id)
         LOG.info("Adding a friend {}. Steam id: {}".format(new_friend.name, steam_id))
@@ -61,3 +60,25 @@ async def add_friend(request):
             "name": new_friend.name,
         }
         return json_response(resp, status=200, content_type="application/json")
+
+
+@routes.post("/message")
+async def send_message(request):
+    """
+    POST /message {"steam_id": int, "message": str}
+    Send a message to user. Returns success or error
+    """
+    client = request.app["bot"]
+    try:
+        body = await request.json()
+        steam_id, message = body["steam_id"], body["message"]
+        user = await client.fetch_user(steam_id)
+        LOG.info("Sending a message to {}. Steam id: {}".format(user.name, steam_id))
+        await user.send(message)
+    except Exception as e:
+        LOG.exception("Error occured")
+        response = {"Error occured": e.args[0]}
+        return json_response(response, status=500, content_type="application/json")
+    else:
+        response = {"Success": "200"}
+        return json_response(response, status=500, content_type="application/json")
