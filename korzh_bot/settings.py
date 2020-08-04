@@ -12,4 +12,6 @@ STEAM_PASSWORD = os.getenv("STEAM_PASSWORD")
 STEAM_API = os.getenv("STEAM_API")
 STEAM_SHARED_SECRET = os.getenv("STEAM_SHARED_SECRET")
 
+BACKEND_URL = os.getenv("BACKEND_URL", "localhost")
+
 PORT = os.getenv("PORT", 8080)
