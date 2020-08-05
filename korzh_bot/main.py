@@ -12,9 +12,8 @@ import logging
 LOG = logging.getLogger("Main")
 
 from aiohttp.web import AppRunner, Application, TCPSite
-from sys import argv
 
-from settings import STEAM_LOGIN, STEAM_PASSWORD, STEAM_API, STEAM_SHARED_SECRET, PORT
+from settings import Config, SteamConfig
 
 
 async def run_bot():
@@ -23,20 +22,19 @@ async def run_bot():
 
     runner = AppRunner(app)
     await runner.setup()
-    site = TCPSite(runner, "0.0.0.0", PORT)
+    site = TCPSite(runner, "0.0.0.0", Config.PORT)
     await site.start()
 
     bot = steam_bot
-
-    for filename in os.listdir("./cogs"):
-        if filename.endswith(".py") and filename != "__init__.py":
-            bot.load_extension("cogs.{name}".format(name=filename[:-3]))
 
     app["bot"] = bot
 
     try:
         await bot.start(
-            STEAM_LOGIN, STEAM_PASSWORD, STEAM_API, shared_secret=STEAM_SHARED_SECRET
+            SteamConfig.STEAM_LOGIN,
+            SteamConfig.STEAM_PASSWORD,
+            SteamConfig.STEAM_API,
+            shared_secret=SteamConfig.STEAM_SHARED_SECRET,
         )
     except:
         await bot.close(),
