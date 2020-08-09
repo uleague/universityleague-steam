@@ -9,3 +9,9 @@ services:
         ports: 
             - 8080:8080
         entrypoint: ['python', 'main.py']
+        networks:
+            - ulnet
+
+networks:
+    ulnet:
+        name: ul_network
