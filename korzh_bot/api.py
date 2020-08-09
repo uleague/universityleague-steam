@@ -81,4 +81,4 @@ async def send_message(request):
         return json_response(response, status=500, content_type="application/json")
     else:
         response = {"Success": "200"}
-        return json_response(response, status=500, content_type="application/json")
+        return json_response(response, status=200, content_type="application/json")
