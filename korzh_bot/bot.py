@@ -75,4 +75,9 @@ async def on_socket_receive(msg) -> None:
                 except Exception:
                     LOG.exception("Error happened")
                 else:
-                    LOG.info(messages)
+                    new_friend = steam_bot.fetch_user(friend_steam_id)
+                    for message in messages:
+                        LOG.info(
+                            "Sending message: {} to {}".format(message, friend_steam_id)
+                        )
+                        await new_friend.send(message)
