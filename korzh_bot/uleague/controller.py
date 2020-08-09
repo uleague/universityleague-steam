@@ -43,7 +43,7 @@ class ULeagueAPI:
         :returns: list of messages for the user
         :rtype: List[Text]
         """
-        _URL = "{}/users/{}/invitations".format(self.URL, steam_id)
+        _URL = "{}/api/v1/users/{}/invitations".format(self.URL, steam_id)
         body = {"token": self.TOKEN}
         try:
             async with aiohttp.ClientSession() as cs:
