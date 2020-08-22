@@ -1,3 +1,5 @@
+# DEPRECATED
+
 from aiohttp.web import RouteTableDef, json_response
 import logging
 

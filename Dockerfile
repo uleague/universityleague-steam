@@ -13,4 +13,4 @@ EXPOSE 80
 
 RUN mkdir -p log
 
-CMD ["python", "main.py"]
+CMD ["python", "-m", "korzh_bot"]
