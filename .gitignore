@@ -5,5 +5,7 @@ __pycache__/
 vscode/
 node_modules/
 log/
+.pytest_cache/
+venv/
 
 .vscode

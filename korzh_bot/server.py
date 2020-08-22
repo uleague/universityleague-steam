@@ -4,8 +4,8 @@ from aiohttp import web
 
 from .bot import steam_bot
 from .settings import Config, SteamConfig
-from .handlers import MainHandler
-from .router import setup_index_handler
+from .handlers import MainHandler, FriendsHandler, MessageHandler
+from .router import setup_index_handler, setup_friends_handler, setup_message_handler
 from .utils.logger import setup_logging
 import logging
 
@@ -23,9 +23,8 @@ def setup_cleanup_hooks(tasks):
 
 
 async def bot_start(app):
-    bot = steam_bot
     try:
-        await bot.start(
+        await steam_bot.start(
             SteamConfig.LOGIN,
             SteamConfig.PASSWORD,
             shared_secret=SteamConfig.SHARED_SECRET,
@@ -33,7 +32,7 @@ async def bot_start(app):
     except:
         raise
     finally:
-        await bot.close()
+        await steam_bot.close()
 
 
 def setup_startup_hooks(loop):
@@ -43,15 +42,18 @@ def setup_startup_hooks(loop):
     return startup
 
 
-async def init_application(loop):
+def init_application(loop):
     app = web.Application()
 
     handler = MainHandler(loop, steam_bot)
+    friends_handler = FriendsHandler(loop, steam_bot)
+    message_handler = MessageHandler(loop, steam_bot)
 
     setup_index_handler(app, handler)
+    setup_friends_handler(app, friends_handler)
+    setup_message_handler(app, message_handler)
 
     app.on_startup.append(setup_startup_hooks(loop))
-
     app.on_cleanup.append(setup_cleanup_hooks([steam_bot.close,]))
 
     return app
