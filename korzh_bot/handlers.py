@@ -11,7 +11,7 @@ class MainHandler:
 
     async def index(self, request):
         try:
-            body = {"Hello from": self.steam_bot.user.name}
+            name = self.steam_bot.user.name
         except Exception as e:
             LOG.exception("Error occured")
             response = {"Error occured": e.args[0]}
@@ -19,10 +19,16 @@ class MainHandler:
                 response, status=500, content_type="application/json"
             )
         else:
-            return web.json_response(body, status=200, content_type="application/json")
+            if name:
+                body = {"Hello from": name}
+                return web.json_response(
+                    body, status=200, content_type="application/json"
+                )
 
 
 class FriendsHandler:
+    _payload = ["steam_id"]
+
     def __init__(self, loop, steam_bot):
         self.loop = loop
         self.steam_bot = steam_bot
@@ -53,6 +59,12 @@ class FriendsHandler:
                 "Adding a friend {}. Steam id: {}".format(new_friend.name, steam_id)
             )
             await new_friend.add()
+        except KeyError as e:
+            LOG.exception("Error occured")
+            response = {"Error occured": e.args[0]}
+            return web.json_response(
+                response, status=400, content_type="application/json"
+            )
         except Exception as e:
             LOG.exception("Error occured")
             response = {"Error occured": e.args[0]}
@@ -82,6 +94,12 @@ class MessageHandler:
                 "Sending a message to {}. Steam id: {}".format(user.name, steam_id)
             )
             await user.send(message)
+        except KeyError as e:
+            LOG.exception("Error occured")
+            response = {"Error occured": e.args[0]}
+            return web.json_response(
+                response, status=400, content_type="application/json"
+            )
         except Exception as e:
             LOG.exception("Error occured")
             response = {"Error occured": e.args[0]}
