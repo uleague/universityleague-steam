@@ -63,4 +63,4 @@ def main():
     setup_logging()
     loop = asyncio.get_event_loop()
     app = init_application(loop)
-    web.run_app(app, host="localhost", port=Config.PORT)
+    web.run_app(app, host="0.0.0.0", port=Config.PORT)
