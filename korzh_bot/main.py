@@ -1,3 +1,5 @@
+# DEPRECATED
+
 import os
 import sys
 from asyncio import get_event_loop
@@ -6,14 +8,14 @@ from bot import steam_bot
 from api import routes
 
 from asyncio import gather, get_event_loop
-from logger import setup_logging
+from .utils.logger import setup_logging
 import logging
 
 LOG = logging.getLogger("Main")
 
 from aiohttp.web import AppRunner, Application, TCPSite
 
-from settings import Config, SteamConfig
+from .settings import Config, SteamConfig
 
 
 async def run_bot():

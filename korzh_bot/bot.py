@@ -24,16 +24,13 @@ from typing import Literal, Awaitable
 import os
 import logging
 
-from uleague.controller import ULeagueAPI
+from .uleague import ULeagueClient
+from .cogs.basic import Basic
 
 LOG = logging.getLogger(__name__)
 
 steam_bot = Bot(command_prefix="!")
-
-# Loading the cogs
-for filename in os.listdir("./cogs"):
-    if filename.endswith(".py") and filename != "__init__.py":
-        steam_bot.load_extension("cogs.{name}".format(name=filename[:-3]))
+steam_bot.add_cog(Basic(steam_bot))
 
 
 @steam_bot.event
@@ -69,7 +66,7 @@ async def on_socket_receive(msg) -> None:
             friend_relations = friend.efriendrelationship
             if friend_relations == 3:  # acceptance scenario
                 # make a request to backend
-                uleague = ULeagueAPI()
+                uleague = ULeagueClient()
                 try:
                     messages = await uleague.get_invitation_message(friend_steam_id)
                 except Exception:
