@@ -81,8 +81,6 @@ jobs:
             --set env[4].value=${{ env.BACKEND_URL }}
             --set env[5].name=BACKEND_TOKEN
             --set env[5].value=${{ env.BACKEND_TOKEN }}
-            --set env[6].name=PORT
-            --set env[6].value=80
           "
         # https://github.com/helm/helm/issues/6378#issuecomment-557746499
         run: |
