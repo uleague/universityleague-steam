@@ -5,10 +5,10 @@ services:
         build:
             context: .
             dockerfile: Dockerfile.dev
-        env_file: korzh_bot/.env
+        env_file: .env
         ports: 
             - 8080:8080
-        entrypoint: ['python', 'main.py']
+        entrypoint: ['python', '-m', 'korzh_bot']
         networks:
             - ulnet
 

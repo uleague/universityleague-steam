@@ -1,16 +1,16 @@
 import aiohttp
 from typing import List, Text
 
-from exceptions import ULeagueRequestError
+from .exceptions import ULeagueRequestError
 
-from . import BACKEND_URL, BACKEND_TOKEN
+from korzh_bot.settings import Config
 
 import logging
 
 LOG = logging.getLogger(__name__)
 
 
-class ULeagueAPI:
+class ULeagueClient:
     """
     Class for interacting with ULeague API.
 
@@ -29,8 +29,8 @@ class ULeagueAPI:
         gets invitation messages.
     """
 
-    URL: str = BACKEND_URL
-    TOKEN: str = BACKEND_TOKEN
+    URL: str = Config.BACKEND_URL
+    TOKEN: str = Config.BACKEND_TOKEN
 
     async def get_invitation_message(self, steam_id: int) -> List[Text]:
         """

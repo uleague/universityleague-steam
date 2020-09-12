@@ -14,7 +14,7 @@ class Config:
 
     BACKEND_URL = os.getenv("BACKEND_URL")
     BACKEND_TOKEN = os.getenv("BACKEND_TOKEN")
-    PORT = os.getenv("PORT", 8080)
+    PORT = os.getenv("PORT", "8000")
 
 
 class SteamConfig:
@@ -22,7 +22,7 @@ class SteamConfig:
     Class for Steam config
     """
 
-    STEAM_LOGIN = os.getenv("STEAM_LOGIN")
-    STEAM_PASSWORD = os.getenv("STEAM_PASSWORD")
-    STEAM_API = os.getenv("STEAM_API")
-    STEAM_SHARED_SECRET = os.getenv("STEAM_SHARED_SECRET")
+    LOGIN = os.getenv("STEAM_LOGIN")
+    PASSWORD = os.getenv("STEAM_PASSWORD")
+    API = os.getenv("STEAM_API")
+    SHARED_SECRET = os.getenv("STEAM_SHARED_SECRET")
