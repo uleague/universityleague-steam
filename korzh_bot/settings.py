@@ -14,7 +14,7 @@ class Config:
 
     BACKEND_URL = os.getenv("BACKEND_URL")
     BACKEND_TOKEN = os.getenv("BACKEND_TOKEN")
-    PORT = os.getenv("PORT", "8000")
+    PORT = os.getenv("PORT", "8080")
 
 
 class SteamConfig:
