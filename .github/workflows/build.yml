@@ -88,8 +88,6 @@ jobs:
     runs-on: ubuntu-latest
     if: always() # set always
     steps:
-        # run this action to get workflow conclusion
-        # You can get conclusion by env (env.WORKFLOW_CONCLUSION)
       - uses: technote-space/workflow-conclusion-action@v1
       - uses: appleboy/telegram-action@master
         with:
