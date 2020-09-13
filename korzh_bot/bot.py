@@ -51,7 +51,7 @@ async def on_socket_receive(msg) -> None:
     """
     Receives every message from Steam Coordinator.
     .. note::
-        We have to mannualy determine the event. Since lib doesn't have on_new_friend
+        We have to mannualy determine the event. Since lib doesn't have on_new_friend.
         Calls ULeague API to get necessary message for the new friend.
         Then sends it.
     
@@ -72,7 +72,7 @@ async def on_socket_receive(msg) -> None:
                 except Exception:
                     LOG.exception("Error happened")
                 else:
-                    new_friend = steam_bot.fetch_user(friend_steam_id)
+                    new_friend = await steam_bot.fetch_user(friend_steam_id)
                     for message in messages:
                         LOG.info(
                             "Sending message: {} to {}".format(message, friend_steam_id)
