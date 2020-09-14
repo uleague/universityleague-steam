@@ -19,6 +19,8 @@ env:
   TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
   TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
   RELEASE_NAME: ul-steam-bot
+  BACKEND_URL: ${{ secrets.BACKEND_URL }}
+  BACKEND_TOKEN: ${{ secrets.BACKEND_TOKEN }}
 
 jobs:
   build:
@@ -75,6 +77,10 @@ jobs:
             --set env[2].value=${{ env.STEAM_API }}
             --set env[3].name=STEAM_SHARED_SECRET
             --set env[3].value=${{ env.STEAM_SHARED_SECRET }}
+            --set env[4].name=BACKEND_URL
+            --set env[4].value=${{ env.BACKEND_URL }}
+            --set env[5].name=BACKEND_TOKEN
+            --set env[5].value=${{ env.BACKEND_TOKEN }}
           "
         # https://github.com/helm/helm/issues/6378#issuecomment-557746499
         run: |
@@ -88,8 +94,6 @@ jobs:
     runs-on: ubuntu-latest
     if: always() # set always
     steps:
-        # run this action to get workflow conclusion
-        # You can get conclusion by env (env.WORKFLOW_CONCLUSION)
       - uses: technote-space/workflow-conclusion-action@v1
       - uses: appleboy/telegram-action@master
         with:
