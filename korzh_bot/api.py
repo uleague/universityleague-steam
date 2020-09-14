@@ -47,7 +47,7 @@ async def all_friends(request):
 @routes.post("/friends")
 async def add_friend(request):
     """
-    PUT /friends {'steamid': 12345678}
+    POST /friends {'steam_id': 12345678}
     Adds a user to friends. Returns minimal info about user
     """
     client = request.app["bot"]

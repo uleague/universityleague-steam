@@ -1,9 +1,9 @@
 """
 =====
-This module initializes the steam client by calling Bot class. 
+This module initializes the steam client by calling Bot class.
 =====
 
-Registering all cogs from /cogs directory for interacting with the bot in 
+Registering all cogs from /cogs directory for interacting with the bot in
 the chat. Might be useful in the future.
 
 It also registers the main events which are neccessary for the korzh_bot.
@@ -13,7 +13,7 @@ Contains following events. Bot listens for them and reacts accordingly.:
             Basically is used only for senging log message that everything is fine.
     * on_socket_receive
         ..note::
-            Is used to detect all messages from the Steam Coordinator. 
+            Is used to detect all messages from the Steam Coordinator.
             Within it messages are filtered to only detect new friend event.
 """
 
@@ -51,10 +51,10 @@ async def on_socket_receive(msg) -> None:
     """
     Receives every message from Steam Coordinator.
     .. note::
-        We have to mannualy determine the event. Since lib doesn't have on_new_friend
+        We have to mannualy determine the event. Since lib doesn' t have on_new_friend.
         Calls ULeague API to get necessary message for the new friend.
         Then sends it.
-    
+
     :param msg: Proto message from Steam Coordinator
     """
     if isinstance(msg.body, CMsgClientFriendsList):
@@ -62,8 +62,10 @@ async def on_socket_receive(msg) -> None:
             len(msg.body.friends) == 1
         ):  # check if the incoming proto msg is a single friend request
             friend: CMsgClientFriendsList = msg.body.friends[0]
-            friend_steam_id = friend.ulfriendid
-            friend_relations = friend.efriendrelationship
+            friend_steam_id, friend_relations = (
+                friend.ulfriendid,
+                friend.efriendrelationship,
+            )
             if friend_relations == 3:  # acceptance scenario
                 # make a request to backend
                 uleague = ULeagueClient()
@@ -71,8 +73,9 @@ async def on_socket_receive(msg) -> None:
                     messages = await uleague.get_invitation_message(friend_steam_id)
                 except Exception:
                     LOG.exception("Error happened")
+                    raise
                 else:
-                    new_friend = steam_bot.fetch_user(friend_steam_id)
+                    new_friend = await steam_bot.fetch_user(friend_steam_id)
                     for message in messages:
                         LOG.info(
                             "Sending message: {} to {}".format(message, friend_steam_id)
