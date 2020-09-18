@@ -8,6 +8,11 @@ from .handlers import MainHandler, FriendsHandler, MessageHandler
 from .router import setup_index_handler, setup_friends_handler, setup_message_handler
 from .utils.logger import setup_logging
 import logging
+import os
+
+import sentry_sdk
+
+sentry_sdk.init(os.getenv("SENTRY_DSN"), traces_sample_rate=0)
 
 LOG = logging.getLogger("Main")
 
