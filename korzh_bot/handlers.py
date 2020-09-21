@@ -1,5 +1,7 @@
 from aiohttp import web
 import logging
+import sys
+from steam.errors import HTTPException
 
 LOG = logging.getLogger(__name__)
 
@@ -65,6 +67,10 @@ class FriendsHandler:
             return web.json_response(
                 response, status=400, content_type="application/json"
             )
+        except HTTPException as e:
+            LOG.exception("HTTP Steam error. Exiting with status code 1")
+            if e.code == 400:
+                sys.exit(1)
         except Exception as e:
             LOG.exception("Error occured")
             response = {"Error occured": e.args[0]}
