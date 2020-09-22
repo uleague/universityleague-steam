@@ -4,7 +4,8 @@ import sys
 import asyncio
 
 from steam.errors import HTTPException
-from steam.protobufs import EMsg, MsgProto, EResult
+from steam.protobufs import EMsg, MsgProto
+from steam.enums import EResult
 from steam import WSForbidden, WSException
 
 LOG = logging.getLogger(__name__)
