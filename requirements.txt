@@ -12,4 +12,6 @@ python_dotenv == 0.14.0
 
 # korzh_bot/bot.py: 20,21
 # korzh_bot/cogs/basic.py: 1
-steamio == 0.3.3
+steamio == 0.4.0 
+
+sentry-sdk == 0.17.6 
