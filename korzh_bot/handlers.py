@@ -1,7 +1,9 @@
 from aiohttp import web
 import logging
 import sys
+
 from steam.errors import HTTPException
+from steam.protobufs import EMsg, MsgProto
 
 LOG = logging.getLogger(__name__)
 
@@ -68,9 +70,12 @@ class FriendsHandler:
                 response, status=400, content_type="application/json"
             )
         except HTTPException as e:
-            LOG.exception("HTTP Steam error. Exiting with status code 1")
+            LOG.exception(
+                "HTTP Steam error. Trying adding friend with manual proto msg"
+            )
             if e.code == 400:
-                sys.exit(1)
+                msg = MsgProto(EMsg.ClientAddFriend, steamid_to_add=new_friend.id64)
+                await self.steam_bot.ws.send_as_proto(msg)
         except Exception as e:
             LOG.exception("Error occured")
             response = {"Error occured": e.args[0]}
