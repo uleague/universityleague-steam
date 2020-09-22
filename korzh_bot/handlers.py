@@ -1,9 +1,11 @@
 from aiohttp import web
 import logging
 import sys
+import asyncio
 
 from steam.errors import HTTPException
-from steam.protobufs import EMsg, MsgProto
+from steam.protobufs import EMsg, MsgProto, EResult
+from steam import WSForbidden, WSException
 
 LOG = logging.getLogger(__name__)
 
@@ -54,6 +56,24 @@ class FriendsHandler:
                 content_type="application/json",
             )
 
+    async def manual_friends_retry(self, new_friend):
+        msg = MsgProto(EMsg.ClientAddFriend, steamid_to_add=new_friend.id64)
+        await self.steam_bot.ws.send_as_proto(msg)
+        try:
+            coro = self.steam_bot.ws.wait_for(
+                EMsg.ClientAddFriendResponse,
+                lambda msg: msg.steam_id_added == new_friend.id64,
+            )  # might be .id64 haven't checked
+            msg = await asyncio.wait_for(coro, timeout=5)
+        except asyncio.TimeoutError:
+            # took too long to send
+            LOG.exception("Took too long to send friend request")
+        else:
+            if msg.header.eresult == EResult.LimitExceeded:
+                raise WSForbidden(msg)
+            if msg.eresult != EResult.OK:
+                raise WSException(msg)
+
     async def post_friends(self, request):
         try:
             body = await request.json()
@@ -74,8 +94,7 @@ class FriendsHandler:
                 "HTTP Steam error. Trying adding friend with manual proto msg"
             )
             if e.code == 400:
-                msg = MsgProto(EMsg.ClientAddFriend, steamid_to_add=new_friend.id64)
-                await self.steam_bot.ws.send_as_proto(msg)
+                await self.manual_friends_retry(new_friend)
         except Exception as e:
             LOG.exception("Error occured")
             response = {"Error occured": e.args[0]}
