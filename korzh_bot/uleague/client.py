@@ -48,8 +48,14 @@ class ULeagueClient:
         try:
             async with aiohttp.ClientSession() as cs:
                 async with cs.get(_URL, json=body) as r:
+                    LOG.info(
+                        "Sending request to backend to get invitations for {}".format(
+                            steam_id
+                        )
+                    )
                     resp = await r.json()
         except (aiohttp.ClientResponseError, aiohttp.ClientConnectorError):
+            LOG.exception("Aiohttp error")
             raise
         else:
             if "error" in resp:

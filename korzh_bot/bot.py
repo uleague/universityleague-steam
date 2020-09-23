@@ -67,13 +67,15 @@ async def on_socket_receive(msg) -> None:
                 friend.efriendrelationship,
             )
             if friend_relations == 3:  # acceptance scenario
+                LOG.info("{} just became our friend!".format(friend_steam_id))
                 # make a request to backend
                 uleague = ULeagueClient()
                 try:
+                    LOG.info("Requesting pending invite messages.")
                     messages = await uleague.get_invitation_message(friend_steam_id)
-                except Exception:
+                except Exception as e:
                     LOG.exception("Error happened")
-                    raise
+                    raise e
                 else:
                     new_friend = await steam_bot.fetch_user(friend_steam_id)
                     for message in messages:
