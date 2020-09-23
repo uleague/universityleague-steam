@@ -3,6 +3,8 @@ import logging
 import sys
 import asyncio
 
+from .uleague import ULeagueClient
+
 from steam.errors import HTTPException
 from steam.protobufs import EMsg, MsgProto
 from steam.enums import EResult
@@ -83,7 +85,21 @@ class FriendsHandler:
             LOG.info(
                 "Adding a friend {}. Steam id: {}".format(new_friend.name, steam_id)
             )
-            await new_friend.add()
+            if new_friend not in self.steam_bot.user.friends:
+                await new_friend.add()
+            else:
+                LOG.info("{} is already in friend list".format(steam_id))
+                uleague = ULeagueClient()
+                try:
+                    LOG.info("Requesting pending invite messages.")
+                    messages = await uleague.get_invitation_message(steam_id)
+                except Exception as e:
+                    LOG.exception("Error happened")
+                    raise e
+                else:
+                    for message in messages:
+                        LOG.info("Sending message: {} to {}".format(message, steam_id))
+                        await new_friend.send(message)
         except KeyError as e:
             LOG.exception("Error occured")
             response = {"Error occured": e.args[0]}
