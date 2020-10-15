@@ -2,7 +2,6 @@ from aiohttp import web
 import logging
 import sys
 import asyncio
-
 from .uleague import ULeagueClient
 
 from steam.errors import HTTPException
@@ -65,7 +64,7 @@ class FriendsHandler:
         try:
             coro = self.steam_bot.ws.wait_for(
                 EMsg.ClientAddFriendResponse,
-                lambda msg: msg.steam_id_added == new_friend.id64,
+                lambda msg: msg.body.steam_id_added == new_friend.id64,
             )  # might be .id64 haven't checked
             msg = await asyncio.wait_for(coro, timeout=5)
         except asyncio.TimeoutError:
