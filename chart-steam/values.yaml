@@ -82,6 +82,7 @@ livenessProbe:
   httpGet:
     path: /
     port: http
+  periodSeconds: 60
 
 # readinessProbe -- Customize the readiness probe.
 readinessProbe:
