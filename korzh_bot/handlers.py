@@ -2,7 +2,6 @@ from aiohttp import web
 import logging
 import sys
 import asyncio
-
 from .uleague import ULeagueClient
 
 from steam.errors import HTTPException
