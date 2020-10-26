@@ -19,7 +19,7 @@ class MainHandler:
 
     async def index(self, request):
         try:
-            state = self.steam_bot.state
+            name = self.steam_bot.user.name
         except Exception as e:
             LOG.exception("Error occured")
             response = {"Error occured": e.args[0]}
@@ -27,8 +27,8 @@ class MainHandler:
                 response, status=500, content_type="application/json"
             )
         else:
-            if state == 1:
-                body = {"Bot is": "Online"}
+            if name:
+                body = {"Hello from": name}
                 return web.json_response(
                     body, status=200, content_type="application/json"
                 )
