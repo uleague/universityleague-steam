@@ -85,6 +85,10 @@ class FriendsHandler:
                 "Adding a friend {}. Steam id: {}".format(new_friend.name, steam_id)
             )
             if new_friend not in self.steam_bot.user.friends:
+                if len(self.steam_bot.user.friends) > 150:
+                    for f in self.steam_bot.user.friends:
+                        LOG.info("Deleting friends cause reaching 150 friends")
+                        await f.remove()
                 await new_friend.add()
             else:
                 LOG.info("{} is already in friend list".format(steam_id))
