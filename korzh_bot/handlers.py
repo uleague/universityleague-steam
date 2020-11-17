@@ -2,6 +2,8 @@ from aiohttp import web
 import logging
 import sys
 import asyncio
+import random
+
 from .uleague import ULeagueClient
 
 from steam.errors import HTTPException
@@ -86,9 +88,11 @@ class FriendsHandler:
             )
             if new_friend not in self.steam_bot.user.friends:
                 if len(self.steam_bot.user.friends) > 150:
-                    for f in self.steam_bot.user.friends:
-                        LOG.info("Deleting friends cause reaching 150 friends")
+                    LOG.info("Deleting friends cause reaching 150 friends")
+                    for i in range(10):
+                        f = random.choice(self.steam_bot.user.friends)
                         await f.remove()
+                        i += 1
                 await new_friend.add()
             else:
                 LOG.info("{} is already in friend list".format(steam_id))
