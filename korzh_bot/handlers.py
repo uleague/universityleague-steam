@@ -2,6 +2,7 @@ from aiohttp import web
 import logging
 import sys
 import asyncio
+import random
 
 from .uleague import ULeagueClient
 
@@ -65,7 +66,7 @@ class FriendsHandler:
         try:
             coro = self.steam_bot.ws.wait_for(
                 EMsg.ClientAddFriendResponse,
-                lambda msg: msg.steam_id_added == new_friend.id64,
+                lambda msg: msg.body.steam_id_added == new_friend.id64,
             )  # might be .id64 haven't checked
             msg = await asyncio.wait_for(coro, timeout=5)
         except asyncio.TimeoutError:
@@ -86,6 +87,12 @@ class FriendsHandler:
                 "Adding a friend {}. Steam id: {}".format(new_friend.name, steam_id)
             )
             if new_friend not in self.steam_bot.user.friends:
+                if len(self.steam_bot.user.friends) > 150:
+                    LOG.info("Deleting friends cause reaching 150 friends")
+                    for i in range(10):
+                        f = random.choice(self.steam_bot.user.friends)
+                        await f.remove()
+                        i += 1
                 await new_friend.add()
             else:
                 LOG.info("{} is already in friend list".format(steam_id))
